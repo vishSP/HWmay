@@ -7,5 +7,5 @@ def index(request):
     return render(request, 'catalog/index.html')
 
 def contacts(request):
-    return render(request, 'catlog/contacts')
+    return render(request, 'catalog/contacts.html')
 
