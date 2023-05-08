@@ -1,0 +1,21 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+{% load tags %}
+        <div class="col-lg-12">
+            <div class="card m-2 text-center">
+                <p>Категория: {{object.category}}</p>
+                <div class="card-body">
+                    <h2>{{object.name}}</h2>
+                    <img class="thumbnails"
+                         src="{% mediapath object.image %}"
+                         alt="Generic placeholder image" width="140" height="140">
+                    <h1>{{object.price}} рублей </h1>
+                    <p>{{object.description}}</p>
+                    <p>{{object.date_create}}</p>
+                    <p><a class="btn btn-secondary" href="" role="button">Купить &raquo;</a></p>
+
+                </div>
+            </div>
+        </div>
+{% endblock %}
