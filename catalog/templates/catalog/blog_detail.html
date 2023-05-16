@@ -1,0 +1,37 @@
+{% extends 'catalog/base.html'%}
+
+{% block content %}
+{% load tags %}
+
+<div class="container text-center">
+
+    <div class="album py-5 bg-light">
+
+        <h1 class="display-4">{{object.title}}</h1>
+        <p></p>
+        <div class="container">
+            <h5 class="h6"> {{object.date_create}} # {{object.views_count}} посмотрели </h5>
+            <p></p>
+            <img class="card-img-top"
+                 data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+                 alt="Thumbnail"
+                 src="{% mediapath object.preview %}"
+                 data-holder-rendered="true" style="height: 350px; width: 600px">
+            <p></p>
+            <div class="container">
+
+                <p2 class="lead text-center"> {{object.data}}</p2>
+                <p></p>
+                <p><a type="submit" class="btn btn-sm btn-outline-secondary"
+                                          href="{% url 'catalog:blog_update' object.slug %}" role="button">Редактировать
+                                        &raquo;</a></p>
+
+                <p><a type="submit" class="btn btn-danger" href="{% url 'catalog:blog_delete' object.slug %}">Удалить
+                       </a></p>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+

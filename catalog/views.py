@@ -1,26 +1,72 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
+from django.urls import reverse_lazy, reverse
+from catalog.models import Category, Product, Blog
 
-from catalog.models import Category, Product
 
+class IndexView(TemplateView):
+    template_name = 'catalog/index.html'
 
-# Create your views here.
-
-def index(request):
-    context = {
-        'object_list': Product.objects.all,
-        'category_list': Category.objects.all
-    }
-    return render(request, 'catalog/index.html', context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['category_list'] = Category.objects.all
+        context['object_list'] = Product.objects.all
+        return context
 
 
 def contacts(request):
     return render(request, 'catalog/contacts.html')
 
 
-def card(request, pk):
-    product = Product.objects.get(pk=pk)
-    context = {
-        'object': product,
-        'title': product.name
-    }
-    return render(request, 'catalog/student.html', context)
+class CardView(DetailView):
+    model = Product
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['title'] = context_data['object']
+        return context_data
+
+
+class BlogView(ListView):
+    model = Blog
+
+
+class BlogCardView(DetailView):
+    model = Blog
+
+    def get_object(self, queryset=None):
+        obj = super().get_object(queryset=queryset)
+        obj.views_count += 1
+        obj.save()
+        return obj
+
+
+class BlogCreateView(CreateView):
+    model = Blog
+    fields = ('title', 'data', 'preview', 'is_active','date_create',)
+    success_url = reverse_lazy('catalog:blog')
+
+
+class BlogUpdateView(UpdateView):
+    model = Blog
+    fields = ('title', 'data', 'preview', 'is_active','date_create',)
+    success_url = reverse_lazy('catalog:blog')
+
+
+class BlogDeleteView(DeleteView):
+    model = Blog
+    fields = ('title', 'data', 'preview', 'is_active', 'date_create',)
+    success_url = reverse_lazy('catalog:blog')
+
+
+def toggle_activity(request, slug):
+    item = get_object_or_404(Blog, slug=slug)
+    if item.is_active:
+        item.is_active = False
+    else:
+        item.is_active = True
+
+    item.save()
+
+    return redirect(reverse('catalog:blog'))
+

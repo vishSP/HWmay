@@ -1,0 +1,46 @@
+{% extends 'catalog/base.html'%}
+
+{% block content %}
+
+
+{% load tags %}
+<div class="col">
+    <div class="album py-5 bg-light">
+
+        <div class="container">
+            <p><a class="btn btn-sm btn-outline-secondary" href="{% url 'catalog:blog_create' %}" role="button">Создать запись &raquo;</a></p>
+
+            <div class="row">
+                {% for object in object_list %}
+                <div class="col-md-4">
+                    <div class="card mb-5 box-shadow">
+                        <img class="card-img-top"
+                             data-src="holder.js/100px225?theme=thumb&amp;bg=55595c&amp;fg=eceeef&amp;text=Thumbnail"
+                             alt="Thumbnail [100%x225]"
+                             src="{% mediapath object.preview %}"
+                             data-holder-rendered="true" style="height: 225px; width: 100%; display: block;">
+                        <div class="card-body">
+                            <p class="card-text">{{object.title}}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+
+                                    <p><a class="btn btn-sm btn-outline-secondary"
+                                          href="{% url 'catalog:card_blog' object.slug %}" role="button">Прочитать
+                                        &raquo;</a></p>
+                                </div>
+                                <small class="text-muted">{{object.date_create}}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}
