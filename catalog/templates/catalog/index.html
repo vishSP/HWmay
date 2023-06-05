@@ -2,22 +2,33 @@
 
 {% block content %}
 {% load tags %}
-    {% for object in object_list %}
-        <div class="col-lg-4">
-            <div class="card m-2 text-center">
-                <div class="card-body">
-                    <img class="thumbnails"
-                         src="/media/{{ object.image }}"
-                         alt="Generic placeholder image" width="140" height="140">
-
-                    <h2>{{object.name}}</h2>
-                    <h1>{{object.price}} руб </h1>
 
 
-                    <p><a class="btn btn-secondary" href="{% url 'catalog:card' object.pk %}" role="button">Подробнее &raquo;</a></p>
-                </div>
-            </div>
+<div class="container">
+    <p><a class="btn btn-secondary" href="{% url 'catalog:prod_create' %}" role="button">Добавить позицию </a></p>
+</div>
+{% for object in object_list %}
+<div class="col-lg-4">
+
+    <div class="card m-2 text-center">
+
+        <div class="card-body">
+
+            <img class="thumbnails"
+                 src="/media/{{ object.image }}"
+                 alt="Generic placeholder image" width="140" height="140">
+
+            <h2>{{object.name}}</h2>
+            <h1>{{object.price}} руб </h1>
+
+
+            <p><a class="btn btn-secondary" href="{% url 'catalog:card' object.pk %}" role="button">Подробнее
+                &raquo;</a></p>
+
         </div>
-    {% endfor %}
+    </div>
+</div>
+
+{% endfor %}
 {% endblock %}
 
