@@ -3,12 +3,13 @@ from django.urls import path
 
 from catalog.views import contacts, CardView, BlogView, BlogCardView, IndexView, BlogCreateView, BlogUpdateView, \
     BlogDeleteView, toggle_activity, ProductCreateView, ProductUpdateView, ProductDeleteView
+from users.models import User
 
 app_name = CatalogConfig.name
 
-
 urlpatterns = [
     path('', IndexView.as_view(), name='index'),
+    path('admin/auth/user/', User, name='admin'),
     path('contacts/', contacts, name='contacts'),
     path('index/<int:pk>/', CardView.as_view(), name='card'),
     path('blog/', BlogView.as_view(), name='blog'),
@@ -18,7 +19,7 @@ urlpatterns = [
     path('blog/delete/<slug:slug>', BlogDeleteView.as_view(), name='blog_delete'),
     path('blog/toggle/<slug:slug>', toggle_activity, name='toggle_activity'),
     path('product/create/', ProductCreateView.as_view(), name='prod_create'),
-    path('product/update/<slug:slug>', ProductUpdateView.as_view(), name='prod_update'),
-    path('product/delete/<slug:slug>', ProductDeleteView.as_view(), name='prod_delete'),
+    path('product/update/<int:pk>', ProductUpdateView.as_view(), name='prod_update'),
+    path('product/delete/<int:pk>', ProductDeleteView.as_view(), name='prod_delete'),
 
 ]

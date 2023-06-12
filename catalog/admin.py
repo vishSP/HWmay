@@ -17,13 +17,13 @@ class ProductAdmin(admin.ModelAdmin):
     search_fields = ('name', 'description')
 
 
-
 @admin.register(Blog)
 class BlogAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug', 'data', 'preview', 'date_create', 'views_count', 'is_active')
     list_filter = ('date_create',)
     search_fields = ('title',)
-    prepopulated_fields = {"slug":("title",)}
+    prepopulated_fields = {"slug": ("title",)}
+
 
 @admin.register(Version)
 class VersionAdmin(admin.ModelAdmin):

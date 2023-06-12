@@ -2,6 +2,7 @@ from django.forms import inlineformset_factory
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy, reverse
+from rest_framework import permissions
 
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Category, Product, Blog, Version
@@ -78,6 +79,7 @@ class ProductCreateView(CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:product')
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_context_data(self, **kwargs):
         context_data = super().get_context_data(**kwargs)
@@ -102,9 +104,11 @@ class ProductUpdateView(UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:product')
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class ProductDeleteView(DeleteView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:product')
+    permission_classes = [permissions.IsAuthenticated]

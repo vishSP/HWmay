@@ -17,6 +17,11 @@
 
                     <p><a class="btn btn-secondary" href="" role="button">Купить &raquo;</a></p>
 
+                     {% if user.is_authenticated %}
+                    <p><a class="btn btn-secondary" href="{% url 'catalog:prod_update' object.pk %}" role="button">Редактировать &raquo;</a></p>
+                    <p><a class="btn btn-secondary" href="{% url 'catalog:prod_delete' object.pk %}" role="button">Удалить &raquo;</a></p>
+                     {% endif %}
+
                 </div>
             </div>
         </div>
