@@ -19,7 +19,9 @@
 
                      {% if user.is_authenticated %}
                     <p><a class="btn btn-secondary" href="{% url 'catalog:prod_update' object.pk %}" role="button">Редактировать &raquo;</a></p>
+                    {% if user.is_superuser %}
                     <p><a class="btn btn-secondary" href="{% url 'catalog:prod_delete' object.pk %}" role="button">Удалить &raquo;</a></p>
+                     {% endif %}
                      {% endif %}
 
                 </div>

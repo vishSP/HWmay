@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.forms import inlineformset_factory
 from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
@@ -8,7 +9,7 @@ from catalog.forms import ProductForm, VersionForm
 from catalog.models import Category, Product, Blog, Version
 
 
-class IndexView(TemplateView):
+class IndexView(LoginRequiredMixin, TemplateView):
     template_name = 'catalog/index.html'
 
     def get_context_data(self, **kwargs):
@@ -45,19 +46,19 @@ class BlogCardView(DetailView):
         return obj
 
 
-class BlogCreateView(CreateView):
+class BlogCreateView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     model = Blog
     fields = ('title', 'data', 'preview', 'is_active', 'date_create',)
     success_url = reverse_lazy('catalog:blog')
 
 
-class BlogUpdateView(UpdateView):
+class BlogUpdateView(LoginRequiredMixin,UpdateView):
     model = Blog
     fields = ('title', 'data', 'preview', 'is_active', 'date_create',)
     success_url = reverse_lazy('catalog:blog')
 
 
-class BlogDeleteView(DeleteView):
+class BlogDeleteView(LoginRequiredMixin, DeleteView):
     model = Blog
     fields = ('title', 'data', 'preview', 'is_active', 'date_create',)
     success_url = reverse_lazy('catalog:blog')
@@ -75,7 +76,7 @@ def toggle_activity(request, slug):
     return redirect(reverse('catalog:blog'))
 
 
-class ProductCreateView(CreateView):
+class ProductCreateView(LoginRequiredMixin, CreateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:product')
@@ -100,14 +101,14 @@ class ProductCreateView(CreateView):
         return super().form_valid(form)
 
 
-class ProductUpdateView(UpdateView):
+class ProductUpdateView(LoginRequiredMixin, UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:product')
     permission_classes = [permissions.IsAuthenticated]
 
 
-class ProductDeleteView(DeleteView):
+class ProductDeleteView(LoginRequiredMixin ,DeleteView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:product')
