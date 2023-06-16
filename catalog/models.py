@@ -28,6 +28,8 @@ class Product(models.Model):
     date_create = models.DateField(auto_now_add=True, verbose_name='дата создания')
     date_last = models.DateField(verbose_name='дата последнего изменения ')
 
+    is_published = models.BooleanField(default=False, verbose_name='признак публикации')
+
     def __str__(self):
         return f'{self.name}{self.price}{self.category}'
 

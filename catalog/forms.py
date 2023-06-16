@@ -15,6 +15,7 @@ class ProductForm(FormStyleMixin, forms.ModelForm):
     class Meta:
         model = Product
         fields = '__all__'
+        exclude = ('is_published',)
 
     def clean_name(self):
         cleaned_data = self.cleaned_data['name']
